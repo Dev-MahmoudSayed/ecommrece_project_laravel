@@ -4,7 +4,9 @@
           <h2>
              Our <span>products</span>
           </h2>
+
        </div>
+       @include('front.success.success')
        <div class="row">
         @foreach ($products as $product )
 
@@ -30,6 +32,7 @@
                         </div>
 
                      </form>
+
                     </div>
                 </div>
                 <div class="img-box">

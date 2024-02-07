@@ -31,7 +31,7 @@
 
 
 
-
+         @include('front.success.success')
       <div class="col-sm-6 col-md-4 col-lg-4 " style="margin: auto; width:50%; padding:30px" >
           <div class="box">
               <div class="option_container">
@@ -69,6 +69,7 @@
                     </div>
 
                  </form>
+
               </div>
            </div>
           </div>

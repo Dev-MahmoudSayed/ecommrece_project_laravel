@@ -25,9 +25,9 @@ class StoreProductRequest extends FormRequest
                 "name"=>"required|string|max:255",
                 "desc"=>"required|string|max:50",
                 "price"=>"required|numeric",
-                "qty"=>"required|numeric|min:1",//min 1
-                "image"=>"required|image|mimes:jpg,png,gif",//max
-                "category_id"=>"required|numeric",//numeric min 1 exists
+                "qty"=>"required|numeric|min:1",
+                "image"=>"required|image|mimes:jpg,png,gif|max:5020",
+                "category_id"=>"required|numeric",
 
         ];
     }

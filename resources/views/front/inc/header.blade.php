@@ -28,16 +28,29 @@
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="{{url('show_cart')}}">Cart</a>
+                </li>
+
+
+                @if (Route::has('login'))
+
+
+                @auth
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="true"> <span class="nav-label">{{ auth()->user()->name }} <span class="caret"></span></a>
+                    <ul class="dropdown-menu">
+                    <li>
+                        <form action="{{ route('logout') }}" method="post">
+                            @csrf
+
+                            <button type="submit" class="btn btn-danger">logout</button>
+                        </form>
+                    </li>
+
+                    </ul>
                  </li>
 
 
-            @if (Route::has('login'))
 
-
-            @auth
-                <li>
-                {{auth()->user()->name}}
-                </li>
             @else
 
             <li class="nav-item">

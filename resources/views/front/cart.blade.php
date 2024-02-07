@@ -29,21 +29,20 @@
         @include('front.inc.header')
          <!-- end header section -->
 
-         @if (session()->has("message"))
-         <div class="btn -btn info" style="background-color: rgb(0, 255, 191)"> {{session()->get("message")}} </div>
-      @endif
+       @include('front.success.success')
          <table  class="table table-sm">
             <thead>
               <tr>
                 <th scope="col">#</th>
                 <th scope="col">Product Name</th>
                 <th scope="col">Product quantity</th>
-                <th scope="col">Price</th>
+                <th scope="col">Total</th>
                 <th scope="col">Image</th>
                 <th scope="col">Aciton</th>
               </tr>
             </thead>
             <tbody>
+                @php $total =0; @endphp
 
                 @foreach ($cart as $cart )
 
@@ -64,17 +63,34 @@
 
                 </tr>
 
-
+                @php $total +=$cart->price*$cart->qty; @endphp
                 @endforeach
 
                </tbody>
             </table>
-            <div class="ml-5 pl-5">
+
+            <div class="ml-5"><a class="btn btn-info">Total Cart Price :{{ $total  }}</a></div>
+            <div class="container text-center">
 
 
                                <h1>proceed to order</h1>
-                               <a href="{{route('order.index')}}" class="btn btn-danger">Cash On Delivery</a>
-                               <a href="" class="btn btn-danger">Pay Using Card</a>
+
+                               <form action="{{ route('order.store') }}" method="post">
+                                @csrf
+
+                                <button type="submit" class="btn btn-danger">Cash On Delivery</button>
+                            </form>
+                            <h1>
+                             <form action="{{ route('paypal') }}" method="post">
+                                @csrf
+                                <input type="hidden" name="amount" value="{{ $total }}">
+                                <button type="submit" class="btn btn-success">Pay Using Card</button>
+                            </form>
+
+                            </h1>
+
+
+
             </div>
             <div>
 

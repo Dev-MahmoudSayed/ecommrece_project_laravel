@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Models\Cart;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -23,6 +24,10 @@ class Order extends Model
     public function User()
     {
         return $this->belongTo(User::class);
+    }
+    public function cart()
+    {
+        return $this->hasMany(Cart::class);
     }
 }
 

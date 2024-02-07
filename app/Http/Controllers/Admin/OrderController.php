@@ -15,17 +15,35 @@ class OrderController extends Controller
      */
     public function index()
     {
-        $user = Auth::user();
-        $userId = $user->id;
-        $data = Cart::where('user_id','=',$userId)->get();
+        $order = Order::paginate('5');
+        return view('admin.Order.index',compact('order'));
 
-        foreach($data as $data)
-        {
+    }
+    /**
+     * Show the form for creating a new resource.
+     */
+    public function create()
+    {
+
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     */
+    public function store(Request $request)
+    {
+
+
+        $user = auth()->user();
+
+     $data= Cart::where('user_id','=',Auth::id())->first();
+
+
             $order = Order::create([
-                'name'=>$data->name,
-                'email'=>$data->email,
-                'phone'=>$data->phone,
-                'address'=>$data->address,
+                'name'=>$user->name,
+                'email'=>$user->email,
+                'phone'=>$user->phone,
+                'address'=>$user->address,
                 'user_id'=>$user->id,
 
                 'product_name'=>$data->product_name,
@@ -38,28 +56,8 @@ class OrderController extends Controller
                'delivery_status'=>'processing'
             ]);
 
-            $cart_id = $data->id;
-            $cart = Cart::find($cart_id);
-            $cart->delete();
-        }
+
         return redirect()->back()->with('message','We have received your order');
-
-    }
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        $order = Order::all();
-        return view('admin.Order.index',compact('order'));
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store()
-    {
-
     }
 
     /**

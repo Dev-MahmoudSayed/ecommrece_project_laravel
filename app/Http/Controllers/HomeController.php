@@ -28,7 +28,7 @@ class HomeController extends Controller
         }
 
 
-    }
+     }
 
     public function product_details($id)
    {
@@ -37,10 +37,18 @@ class HomeController extends Controller
    }
    public function add_cart( Request $request ,$id)
    {
-        if(Auth::id())
+    ;
+        if(auth()->check())
         {
+
            $user = Auth::user();
            $product = Product::find($id);
+           $cart= auth()->user()->cart;
+           if(Cart::where('product_id',$product->id)->where('user_id',Auth::id())->exists())
+           {
+            return redirect()->back()->with("success","product already in your cart");
+           }
+
             $cart = Cart::create([
                 'name'=>$user->name,
                 'email'=>$user->email,
@@ -55,9 +63,8 @@ class HomeController extends Controller
 
                'qty'=>$request->qty,
             ]);
-            return redirect()->back();
 
-
+            return redirect(route('cart.show'))->with("success","data inserted success");
         }else
         {
             return redirect('login');
@@ -66,7 +73,7 @@ class HomeController extends Controller
    public function show_cart()
    {
 
-    if(Auth::id())
+    if(auth()->check())
     {
 
         $id = Auth::user()->id;
@@ -80,18 +87,17 @@ class HomeController extends Controller
 
 
    }
-   public function remove_cart($id)
+   public function remove_cart(Cart $cart)
    {
-        $cart = Cart::find($id);
         $cart->delete();
         return redirect()->back();
    }
 
-
-
-
-
-
+   public function logout()
+   {
+     Auth::logout();
+     return redirect('login');
+   }
 
 
 }
