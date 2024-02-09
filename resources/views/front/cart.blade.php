@@ -30,6 +30,7 @@
          <!-- end header section -->
 
        @include('front.success.success')
+
          <table  class="table table-sm">
             <thead>
               <tr>
@@ -68,8 +69,78 @@
 
                </tbody>
             </table>
+           {{-- @if (session('coupon'))
+            <div class="ml-5"><a class="btn btn-info">Total After discount :{{ session('coupon')['discount']  }}</a></div>
+
+
 
             <div class="ml-5"><a class="btn btn-info">Total Cart Price :{{ $total  }}</a></div>
+            @endif --}}
+
+
+
+
+            @if (session()->has('coupon'))
+            <div class="row">
+                <div class="col-md-4">
+                    <span class="light-text inline">Discount({{ session('coupon')['code'] }})</span>
+                </div>
+                <div class="col-md-4">
+
+                </div>
+                <div class="col-md-4">
+                    <div class="ml-5"><a class="btn btn-info">Total After discount :{{ session('coupon')['discount']  }}</a></div>
+
+                </div>
+            </div><hr>
+
+        @endif
+
+        <div class="row">
+            <div class="col-md-4">
+                <span>Total</span>
+            </div>
+            <div class="col-md-4 offset-md-4">
+                <div class="ml-5"><a class="btn btn-info">Total Cart Price :{{ $total  }}</a></div>
+            </div>
+        </div>
+        <hr>
+        @if (!session()->has('coupon'))
+            <form action="{{ route('coupon.store') }}" method="POST">
+                @csrf()
+                <label for="coupon_code">Have a coupon ?</label>
+                <input type="text" name="coupon_code" id="coupon" class="form-control my-input" placeholder="123456" required>
+                <button type="submit" class="btn btn-success custom-border-success btn-block">Apply Coupon</button>
+            </form>
+        @endif
+
+
+
+
+
+
+
+
+
+
+
+
+{{--
+
+
+            <div class="card mt-5 ml-4" style="width: 18rem;">
+
+                <div class="card-body ">
+
+                  <form action="{{ route('coupons.check') }}" method="post">
+                    @csrf
+                    <!-- Other order fields here -->
+                    <label for="coupon_code">Coupon Code:</label>
+                    <input type="text" id="coupon_code" name="code">
+                    <button class="btn btn-success mt-3" type="submit">submit</button>
+                </form>
+                </div>
+              </div> --}}
             <div class="container text-center">
 
 

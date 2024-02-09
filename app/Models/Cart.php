@@ -17,12 +17,28 @@ class Cart extends Model
     {
         return $this->belongTo(Category::class);
     }
-    public function Product()
+    public function products()
     {
-        return $this->belongTo(Product::class);
+        return $this->belongsTo(Product::class);
     }
     public function order()
     {
         return $this->belongTo(Order::class);
     }
+    public function coupons()
+   {
+    return $this->belongsToMany(Coupon::class);
+   }
+   public function getTotalPrice()
+{
+    $total = 0;
+
+    // Loop through each product in the cart
+    foreach ($this->products as $product) {
+        // Add the product's price multiplied by its quantity to the total
+        $total += $product->price * $product->quantity;
+    }
+
+    return $total;
+}
 }

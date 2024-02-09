@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Models\Cart;
 use App\Models\Order;
+use App\Models\Coupon;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
@@ -33,7 +34,6 @@ class OrderController extends Controller
     public function store(Request $request)
     {
 
-
         $user = auth()->user();
 
      $data= Cart::where('user_id','=',Auth::id())->first();
@@ -55,6 +55,7 @@ class OrderController extends Controller
                'payment_status'=>'cash on deliver',
                'delivery_status'=>'processing'
             ]);
+
 
 
         return redirect()->back()->with('message','We have received your order');
